@@ -1,1 +1,333 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIT Nagpur | Department of Computer Science</title>
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Design Tokens & Variables --- */
+        :root {
+            --primary: #0A2540;
+            --primary-light: #1A365D;
+            --accent: #D4AF37;
+            --accent-hover: #F3CD44;
+            --text-main: #2D3748;
+            --text-muted: #64748B;
+            --bg-light: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-md: 0 10px 30px rgba(10, 37, 64, 0.06);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Base Resets --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Premium Header & Navigation --- */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #FFFFFF, var(--accent));
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        header h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #A0AEC0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            background-color: var(--card-bg);
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav button:hover {
+            color: var(--primary);
+        }
+
+        nav button.active {
+            color: var(--primary);
+        }
+
+        nav button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        /* --- Master Layout Container --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            min-height: 50vh;
+        }
+
+        /* --- Views Architecture (Tab Switching) --- */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .view-section.active-view {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Beautiful Card System --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        /* --- Grid & Department Highlights --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--accent);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .feature-item h4 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        /* --- Action UI Buttons --- */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(10, 37, 64, 0.15);
+        }
+
+        .cta-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 37, 64, 0.2);
+        }
+
+        /* --- Premium Data Table Styling --- */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid #E2E8F0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background: white;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #E2E8F0;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F8FAFC;
+        }
+
+        tr:hover td {
+            background-color: #F1F5F9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: #E2E8F0;
+            color: var(--primary);
+        }
+
+        .badge.active-spec {
+            background-color: #E0F2FE;
+            color: #0369A1;
+        }
+
+        /* --- Premium Footer --- */
+        footer {
+            margin-top: 80px;
+            background-color: var(--primary);
+            color: #94A3B8;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Premium Master Header -->
+    <header>
+        <h1>Department of Computer Science</h1>
+        <h3>Symbiosis Institute of Technology (SIT), Nagpur</h3>
+    </header>
+
+    <!-- Navigation Hub (Handles smooth interface switching) -->
+    <nav>
+        <button id="nav-home" class="active" onclick="switchView('home')">Overview</button>
+        <button id="nav-student" onclick="switchView('student')">Student Information Portal</button>
+    </nav>
+
+    <!-- Master Layout Content Wrapper -->
+    <main class="main-container">
+
+        <!-- VIEW 1: Department Overview Home -->
+        <section id="view-home" class="view-section active-view">
+            <div class="card">
+                <h2>Welcome to our Department</h2>
+                <p>We provide a collaborative, high-fidelity environment built around advanced software development ecosystems, emerging AI frameworks, and rigorous computational principles.</p>
+                
+                <button class="cta-btn" onclick="switchView('student')">
+                    Launch Student Portal &rarr;
+                </button>
+
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h4>Immersive Infrastructure</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0;">High-performance computing core laboratories outfitted with industrial testing suites.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Ecosystem Specialisms</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0;">Curated engineering tracks spanning Deep Learning, Cloud Architectures, and Cryptography.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>Placement Alliances</h4>
+                        <p style="font-size: 0.95rem; margin: 5px 0 0 0;">Strategic dynamic pathways linked explicitly with global Tier-1 tech enterprises.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
