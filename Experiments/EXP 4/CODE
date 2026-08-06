@@ -1,1 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATM PIN Security Demo</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #0f172a, #1d4ed8);
+      font-family: Arial, Helvetica, sans-serif;
+      color: #e5eefc;
+    }
 
+    .card {
+      width: min(92vw, 460px);
+      background: rgba(15, 23, 42, 0.82);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0 0 18px;
+      font-size: 1.6rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #94a3b8;
+      background: #e2e8f0;
+      color: #0f172a;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(148, 163, 184, 0.18);
+      min-height: 70px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>ATM PIN Security Demo "JANHAVI ADMANE"</h1>
+    <label for="pinInput">Enter your PIN</label>
+    <input id="pinInput" type="number" placeholder="Example: 7337 or 984321" />
+    <button id="processBtn">Process Transaction</button>
+    <div id="result" class="result">Press the button to test the PIN.</div>
+  </div>
+
+  <script>
+    const IS_ATM_ONLINE = true;
+
+    const reversePin = function(pin) {
+      const pinAsString = String(pin);
+      return pinAsString.split("").reverse().join("");
+    };
+
+    const checkPalindrome = (original, reversed) => String(original) === reversed;
+
+    function processTransaction(enteredPin) {
+      if (!IS_ATM_ONLINE) {
+        return "System offline. Please use another ATM.";
+      }
+
+      const stringPin = String(enteredPin);
+      const pinLength = stringPin.length;
+
+      if (pinLength !== 4 && pinLength !== 6) {
+        return "Transaction Cancelled: Invalid PIN length.";
+      }
+
+      const reversedPin = reversePin(enteredPin);
+      const isMatched = checkPalindrome(enteredPin, reversedPin);
+
+      if (isMatched) {
+        return "Authentication Successful.\n⚠️ WARNING: Palindrome PINs (e.g., 1221, 5665) are easily guessed. Please update your credentials.";
+      }
+
+      return "Authentication Successful. Processing your transaction safely...";
+    }
+
+    const pinInput = document.getElementById("pinInput");
+    const resultBox = document.getElementById("result");
+    const processBtn = document.getElementById("processBtn");
+
+    processBtn.addEventListener("click", () => {
+      const enteredPin = pinInput.value.trim();
+      if (!enteredPin) {
+        resultBox.textContent = "Please enter a PIN first.";
+        return;
+      }
+
+      const output = processTransaction(enteredPin);
+      resultBox.textContent = output;
+    });
+  </script>
+</body>
+</html>
