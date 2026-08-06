@@ -61,13 +61,13 @@
 
     <!-- Inline CSS -->
     <h1 style="color:green;">WELCOME TO INLINE CSS</h1>
-    <p><b>Name:</b> Soumya Bajirao</p>
-    <p><b>PRN:</b> 24070521146</p>
+    <p><b>Name:</b> Janhavi Admane</p>
+    <p><b>PRN:</b> 24070521211</p>
 
     <!-- External CSS -->
     <h1 class="heading2">WELCOME TO EXTERNAL CSS</h1>
-    <p><b>Name:</b> Soumya Bajirao</p>
-    <p><b>PRN:</b> 24070521146</p>
+    <p><b>Name:</b>Janhavi Admane </p>
+    <p><b>PRN:</b> 24070521211</p>
 
     <!-- Button -->
     <button onclick="alert('Welcome Soumya!')">
