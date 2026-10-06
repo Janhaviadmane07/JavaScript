@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATM PIN Security Demo</title>
+  <style>
+    /* Theme Variables */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a, #1d4ed8);
+      --card-bg: rgba(15, 23, 42, 0.82);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text-color: #e5eefc;
+      --input-bg: #e2e8f0;
+      --input-text: #0f172a;
+      --result-bg: rgba(148, 163, 184, 0.18);
+      --toggle-bg: rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] {
+      --bg-gradient: linear-gradient(135deg, #f1f5f9, #cbd5e1);
+      --card-bg: #ffffff;
+      --card-border: rgba(15, 23, 42, 0.12);
+      --text-color: #0f172a;
+      --input-bg: #f8fafc;
+      --input-text: #0f172a;
+      --result-bg: rgba(15, 23, 42, 0.06);
+      --toggle-bg: rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--bg-gradient);
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text-color);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .card {
+      position: relative;
+      width: min(92vw, 460px);
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+
+    /* Theme Toggle Button Style */
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--toggle-bg);
+      border: none;
+      color: var(--text-color);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: bold;
+      width: auto;
+      transition: background 0.2s;
+    }
+
+    .theme-toggle:hover {
+      opacity: 0.9;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0 18px;
+      font-size: 1.6rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #94a3b8;
+      background: var(--input-bg);
+      color: var(--input-text);
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    button.process-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button.process-btn:hover {
+      background: #16a34a;
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: var(--result-bg);
+      min-height: 70px;
+      line-height: 1.5;
+      white-space: pre-line;
+      transition: background 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <button id="themeToggle" class="theme-toggle">☀️ Light Mode</button>
+   
+    <h1>ATM PIN Security Demo "JANHAVI ADMANE"</h1>
+    <label for="pinInput">Enter your PIN</label>
+    <input id="pinInput" type="number" placeholder="Example: 7337 or 984321" />
+    <button id="processBtn" class="process-btn">Process Transaction</button>
+    <div id="result" class="result">Press the button to test the PIN.</div>
+  </div>
+
+  <script>
+    const IS_ATM_ONLINE = true;
+
+    // Theme Toggle Functionality
+    const themeToggleBtn = document.getElementById("themeToggle");
+   
+    themeToggleBtn.addEventListener("click", () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+     
+      if (currentTheme === "light") {
+        document.documentElement.removeAttribute("data-theme");
+        themeToggleBtn.textContent = "☀️ Light Mode";
+      } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        themeToggleBtn.textContent = "🌙 Dark Mode";
+      }
+    });
+
+    // Existing Logic
+    const reversePin = function(pin) {
+      const pinAsString = String(pin);
+      return pinAsString.split("").reverse().join("");
+    };
+
+    const checkPalindrome = (original, reversed) => String(original) === reversed;
+
+    function processTransaction(enteredPin) {
+      if (!IS_ATM_ONLINE) {
+        return "System offline. Please use another ATM.";
+      }
+
+      const stringPin = String(enteredPin);
+      const pinLength = stringPin.length;
+
+      if (pinLength !== 4 && pinLength !== 6) {
+        return "Transaction Cancelled: Invalid PIN length.";
+      }
+
+      const reversedPin = reversePin(enteredPin);
+      const isMatched = checkPalindrome(enteredPin, reversedPin);
+
+      if (isMatched) {
+        return "Authentication Successful.\n⚠️ WARNING: Palindrome PINs (e.g., 1221, 5665) are easily guessed. Please update your credentials.";
+      }
+
+      return "Authentication Successful. Processing your transaction safely...";
+    }
+
+    const pinInput = document.getElementById("pinInput");
+    const resultBox = document.getElementById("result");
+    const processBtn = document.getElementById("processBtn");
+
+    processBtn.addEventListener("click", () => {
+      const enteredPin = pinInput.value.trim();
+      if (!enteredPin) {
+        resultBox.textContent = "Please enter a PIN first.";
+        return;
+      }
+
+      const output = processTransaction(enteredPin);
+      resultBox.textContent = output;
+    });
+  </script>
+</body>
+</html>
