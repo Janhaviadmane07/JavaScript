@@ -1,0 +1,42 @@
+[
+  {
+    "Name": "janhavi admane",
+    "PRN": "24070521211",
+    "Department": "Computer Engineering",
+    "Year": "Third Year",
+    "Event Name": "CodeSprint",
+    "Registration Status": "Registered"
+  },
+  {
+    "Name": "soumya bajirao",
+    "PRN": "24070521146",
+    "Department": "Information Technology",
+    "Year": "Third Year",
+    "Event Name": "Designathon",
+    "Registration Status": "Pending"
+  },
+  {
+    "Name": "atharva suryawanshi",
+    "PRN": "24070521144",
+    "Department": "Mechanical Engineering",
+    "Year": "Third Year",
+    "Event Name": "RoboFest",
+    "Registration Status": "Cancelled"
+  },
+  {
+    "Name": "arman meshram",
+    "PRN": "24070521143",
+    "Department": "Computer Engineering",
+    "Year": "Fourth Year",
+    "Event Name": "CodeSprint",
+    "Registration Status": "Registered"
+  },
+  {
+    "Name": "Kabir Joshi",
+    "PRN": "25070521147",
+    "Department": "Electronics Engineering",
+    "Year": "Second Year",
+    "Event Name": "Circuit Challenge",
+    "Registration Status": "Pending"
+  }
+]
